@@ -1,4 +1,6 @@
-Current version 3.16.11
+Current version 3.16.12
+
+3.16.12  *) @specu, Added support for more activities and additional check for ban
 
 3.16.11  *) @dwait, Fix indentations, extra spaces, comparisons to None, typos
             Raise exception on unrecognized dashboard

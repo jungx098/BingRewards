@@ -19,6 +19,8 @@ import re
 from datetime import datetime
 import sys
 
+import helpers
+
 class Reward:
     "A class to represent a Bing reward"
 
@@ -137,6 +139,8 @@ def parseDashboardPage(page, bing_url):
                     validRwd = createRewardNewFormat(page, currentTitle, newRwd)
                     if validRwd:
                        allRewards.append(newRwd)
+    elif page.find("Uh oh, it appears your Microsoft Rewards account has been suspended.") != -1:
+        raise helpers.BingAccountError("Your Microsoft Rewards account has been suspended")
     else:
         raise helpers.BingAccountError("Unrecognized dashboard page")
 
@@ -167,11 +171,13 @@ def createReward(reward, rUrl, rName, rPC, rPM, rDesc, hitId=None, hitHash=None)
                       or t[Reward.Type.Col.DESCRIPTION] == reward.description ):
                             reward.tp = t
 
-    # Unless the activity already matches other type
-    # for 'HIT' rewards (10 points) we assume 10 points, higher values won't be triggered.
-    # To determine whether a hit is already complete, there is the comparison below.
-    if reward.progressMax == 10 and reward.progressCurrent != 10 and reward.tp is None:
-        reward.tp = Reward.Type.RE_EARN_CREDITS 
+    # If the activity's url contains the following pattern, it will complete the same way as a quiz
+    if 'https://www.bing.com/rewards/checkuser?rabruid=' in reward.url:
+        reward.tp = Reward.Type.RE_QUIZ
+    # If reward type hasn't been matched yet and it has both hitId and hitHash try completing it as a hit
+    # Not all hits are 10 points. Anniversary hits can be 500 points, there's other occasional hits for 100,200
+    elif reward.hitId and reward.hitHash and reward.tp is None:
+        reward.tp = Reward.Type.RE_EARN_CREDITS
 
 def createRewardNewFormat(page, title, newRwd):
     curDate = datetime.now()
