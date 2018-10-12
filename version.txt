@@ -1,4 +1,6 @@
-Current version 3.16.12
+Current version 3.16.13
+
+3.16.13  *) @specu, Added support for "Football fanatic" quiz
 
 3.16.12  *) @specu, Added support for more activities and additional check for ban
 

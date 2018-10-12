@@ -74,11 +74,12 @@ class Reward:
         STREAK               = (18,   "Current day streak",                None, False, Action.INFORM)
         DAILY_POLL           = (19,   "Daily Poll",                        None, False, Action.QUIZ)
         NEWS_QUIZ            = (20,   "Test your smarts",                  None, False, Action.QUIZ)
+        FOOTBALL_QUIZ        = (21,   "Football fanatic",                  None, False, Action.QUIZ)
 
         ALL = (RE_EARN_CREDITS_PASS, RE_EARN_CREDITS, SEARCH_MOBILE, SEARCH_PC, YOUR_GOAL, MAINTAIN_GOLD,
                REFER_A_FRIEND, SEND_A_TWEET, RE_EARNED_CREDITS, COMPLETED, SILVER_STATUS, INVITE_FRIENDS,
                EARN_MORE_POINTS, SEARCH_AND_EARN, THURSDAY_BONUS, RE_QUIZ, SHOP_AND_EARN, STREAK,
-               DAILY_POLL, NEWS_QUIZ)
+               DAILY_POLL, NEWS_QUIZ, FOOTBALL_QUIZ)
 
     def __init__(self):
         self.url = ""               # optional
